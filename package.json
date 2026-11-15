@@ -1,0 +1,11 @@
+{
+  "name": "mealmate-django",
+  "version": "1.0.0",
+  "description": "Food delivery Django app for Vercel deployment",
+  "scripts": {
+    "build": "echo 'Build completed'",
+    "start": "python manage.py runserver"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

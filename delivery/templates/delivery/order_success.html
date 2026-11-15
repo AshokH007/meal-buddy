@@ -1,0 +1,124 @@
+{% extends 'delivery/base.html' %}
+
+{% block title %}Order Success - MealBuddy{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center">
+        <!-- Success Icon -->
+        <div class="w-24 h-24 mx-auto mb-8 bg-green-100 rounded-full flex items-center justify-center">
+            <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        
+        <!-- Success Message -->
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Order Confirmed!</h1>
+        <p class="text-xl text-gray-600 mb-8">Your delicious food is on its way</p>
+        
+        <!-- Order Details Card -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="text-left">
+                    <h2 class="text-lg font-semibold mb-4">Order Details</h2>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Order ID</span>
+                            <span class="font-semibold">#MB{{ username|slice:":3"|upper }}{{ "now"|date:"YmdHis" }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Customer</span>
+                            <span class="font-semibold">{{ username }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Payment</span>
+                            <span class="font-semibold">Paid Online</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Total Amount</span>
+                            <span class="font-semibold text-orange-500">₹{{ total_price }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-left">
+                    <h2 class="text-lg font-semibold mb-4">Delivery Information</h2>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Estimated Delivery</span>
+                            <span class="font-semibold">30-40 minutes</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Delivery Address</span>
+                            <span class="font-semibold">Your saved address</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Contact</span>
+                            <span class="font-semibold">+91 99999 99999</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Delivery Partner</span>
+                            <span class="font-semibold">Assigned soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Items Summary -->
+            <div class="mt-8 pt-8 border-t">
+                <h3 class="text-lg font-semibold mb-4">Order Items</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for item in cart_items %}
+                    <div class="flex items-center space-x-3">
+                        <img src="{{ item.picture }}" alt="{{ item.name }}" class="w-12 h-12 object-cover rounded">
+                        <div class="flex-1">
+                            <h4 class="font-medium">{{ item.name }}</h4>
+                            <p class="text-sm text-gray-600">Qty: 1</p>
+                        </div>
+                        <span class="font-semibold">₹{{ item.price }}</span>
+                    </div>
+                    {% empty %}
+                    <div class="col-span-full text-center text-gray-500">
+                        No items in this order
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'index' %}" class="btn-primary text-white px-8 py-3 rounded-lg font-medium">
+                Continue Ordering
+            </a>
+            <a href="{% url 'show_cart' username %}" class="border-2 border-orange-500 text-orange-500 px-8 py-3 rounded-lg font-medium hover:bg-orange-50">
+                View Order History
+            </a>
+        </div>
+        
+        <!-- Tracking Info -->
+        <div class="mt-12 bg-blue-50 rounded-lg p-6">
+            <h3 class="text-lg font-semibold mb-3 text-blue-900">Track Your Order</h3>
+            <p class="text-blue-700 mb-4">You'll receive real-time updates on your phone</p>
+            <div class="flex justify-center space-x-8 text-sm">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center">✓</div>
+                    <span class="text-blue-900">Order Placed</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gray-300 text-white rounded-full flex items-center justify-center">2</div>
+                    <span class="text-gray-500">Preparing</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gray-300 text-white rounded-full flex items-center justify-center">3</div>
+                    <span class="text-gray-500">On the way</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gray-300 text-white rounded-full flex items-center justify-center">4</div>
+                    <span class="text-gray-500">Delivered</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
